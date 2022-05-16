@@ -50,21 +50,6 @@ display = Entry(top_frame, bg='#2c31c7', fg='white', bd=15,
                 justify='left', relief=RIDGE, textvariable=text_input)
 display.pack(side = TOP)
 # Make calculator buttons
-# # Sin
-# sin = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=3,
-#                         text="sin", command= lambda: btn_click('sin('))
-# sin.grid(row=1, column=0)
-# # Cos
-# cos = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=3,
-#                         text="cos", command= lambda: btn_click('cos('))
-# cos.grid(row=1, column=1)
-# # Tan
-# tan = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=3,
-#                         text="tan", command= lambda: btn_click('tan('))
-# tan.grid(row=1, column=2)
 # clear
 clear = Button(bottom_frame, bg='#666666', fg='white', bd=4,
                         height=1, width=3,

@@ -1,25 +1,36 @@
-
 from tkinter import *
+from math import *
 
-deg_mode_flag = False
-rad_mode_flag = True
-# Common butns propertires
-btn_params = {
-    'padx': 16,
-    'pady': 1,
-    'bd': 4,
-    'fg': 'white',
-    'bg': '#666666',
-    'font': ('arial', 18),
-    'width': 2,
-    'height': 2,
-    'relief': 'flat',
-    'activebackground': "#666666"
-}
+expression = ""
+convert_constant = 1
+
+def btn_click(expression_val):
+    global expression
+    if len(expression) >= 18:
+        text_input.set('Too big')
+    else:
+        expression = expression + str(expression_val)
+        text_input.set(expression)
+    
+
+def clear_all():
+    global expression
+    expression = ""
+    text_input.set("")
+
+def btn_equal():
+    global expression
+    if('pi' in expression):
+        expression = expression.replace('pi', '3.1415')
+    sum_up = str(eval(expression))
+    text_input.set(sum_up)
+    expression = sum_up
+
+
 
 window = Tk()
 # Set tile
-window.title("144 Calulator")
+window.title("Simple Calulator")
 # Set the App size
 window.geometry('320x500')
 # Make the App not resizable
@@ -36,95 +47,155 @@ bottom_frame = Frame(window, width=320, height=470, bd=4, relief='flat', bg='#66
 bottom_frame.pack(side = BOTTOM)
 # Make calculator display
 display = Entry(top_frame, bg='#2c31c7', fg='white', bd=15,
-                justify='right', relief=RIDGE, textvariable=text_input)
+                justify='left', relief=RIDGE, textvariable=text_input)
 display.pack(side = TOP)
 # Make calculator buttons
-# # DEG
-# deg_mode = Checkbutton(bottom_frame, bg='#666666', fg= 'white', text="DEG", variable=deg_mode_flag,
-#                         onvalue=True, offvalue=False)
-# deg_mode.grid(row=0, column=0)
-# # RAD
-# rad_mode = Checkbutton(bottom_frame, text="DEG", variable=rad_mode_flag,
-#                         onvalue=True, offvalue=False)
-# rad_mode.grid(row=0, column=2)
-# ^2
-pow_2 = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+# # Sin
+# sin = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+#                         height=1, width=3,
+#                         text="sin", command= lambda: btn_click('sin('))
+# sin.grid(row=1, column=0)
+# # Cos
+# cos = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+#                         height=1, width=3,
+#                         text="cos", command= lambda: btn_click('cos('))
+# cos.grid(row=1, column=1)
+# # Tan
+# tan = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+#                         height=1, width=3,
+#                         text="tan", command= lambda: btn_click('tan('))
+# tan.grid(row=1, column=2)
+# clear
+clear = Button(bottom_frame, bg='#666666', fg='white', bd=4,
                         height=1, width=3,
-                        text="^2", command= '')
-pow_2.grid(row=1, column=0)
-# ^3
+                        text="C", command= lambda: clear_all())
+clear.grid(row=1, column=0)
+
+# ^2
 pow_3 = Button(bottom_frame, bg='#666666', fg='white', bd=4,
                         height=1, width=3,
-                        text="^3", command= '')
-pow_3.grid(row=1, column=1)
+                        text="^3", command= lambda: btn_click('**3'))
+pow_3.grid(row=2, column=0)
+# Root
+root = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="√", command= lambda: btn_click('sqrt('))
+root.grid(row=2, column=1)
 # ^10
 pow_10 = Button(bottom_frame, bg='#666666', fg='white', bd=4,
                         height=1, width=3,
-                        text="^10", command= '')
-pow_10.grid(row=1, column=2)
-# Sin
-sin = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        text="^10", command= lambda: btn_click('**10'))
+pow_10.grid(row=2, column=2)
+# residual
+residual = Button(bottom_frame, bg='#666666', fg='white', bd=4,
                         height=1, width=6,
-                        text="sin", command= '')
-sin.grid(row=1, column=3)
-# ^1/2
-root = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        text="%", command= lambda: btn_click('%'))
+residual.grid(row=2, column=3)
+
+# 9
+nine = Button(bottom_frame, bg='#666666', fg='white', bd=4,
                         height=1, width=3,
-                        text="^1/2", command= '')
-root.grid(row=2, column=0)
-# 10^
-pow_to_10 = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        text="9", command= lambda: btn_click('9'))
+nine.grid(row=3, column=0)
+# square
+square = Button(bottom_frame, bg='#666666', fg='white', bd=4,
                         height=1, width=3,
-                        text="10^", command= '')
-pow_to_10.grid(row=2, column=1)
-# log
-log = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        text="^2", command= lambda: btn_click('**2'))
+square.grid(row=3, column=1)
+# x^-1
+pi = Button(bottom_frame, bg='#666666', fg='white', bd=4,
                         height=1, width=3,
-                        text="log", command= '')
-log.grid(row=2, column=2)
-# Cos
-cos = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        text="π", command= lambda: btn_click('pi'))
+pi.grid(row=3, column=2)
+# /
+divide = Button(bottom_frame, bg='#666666', fg='white', bd=4,
                         height=1, width=6,
-                        text="cos", command= '')
-cos.grid(row=2, column=3)
-# # (
-# btn_left_brack = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=3,
-#                         text="(", command= '')
-# btn_left_brack.grid(row=0, column=0)
-# # )
-# btn_left_brack = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=3,
-#                         text=")", command= '')
-# btn_left_brack.grid(row=0, column=1)
-# # 0
-# btn_left_brack = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=3,
-#                         text="0", command= '')
-# btn_left_brack.grid(row=0, column=2)
-# # .
-# btn_left_brack = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=1,
-#                         text=".", command= '')
-# btn_left_brack.grid(row=0, column=3)
-# # =
-# btn_left_brack = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=3,
-#                         text="=", command= '')
-# btn_left_brack.grid(row=0, column=4)
+                        text="/", command= lambda: btn_click('/'))
+divide.grid(row=3, column=3)
 
-# btn_left_brack = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=4,
-#                         text="(", command= '')
-# btn_left_brack.grid(row=0, column=5)
+# 6
+six = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="6", command= lambda: btn_click('6'))
+six.grid(row=4, column=0)
+# 7
+seven = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="7", command= lambda: btn_click('7'))
+seven.grid(row=4, column=1)
+# 8
+eight = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="8", command= lambda: btn_click('8'))
+eight.grid(row=4, column=2)
+# X
+cross = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=6,
+                        text="X", command= lambda: btn_click('*'))
+cross.grid(row=4, column=3)
 
-# btn_left_brack = Button(bottom_frame, bg='#666666', fg='white', bd=4,
-#                         height=1, width=3,
-#                         text="(", command= '')
-# btn_left_brack.grid(row=1, column=0)
-# Entry(window, relief=RIDGE, textvariable=display,
-#         justify='right'
-#         , bd=30, bg="powder blue").pack(side=TOP,
-#         expand=YES, fill=BOTH)
+# 3
+three = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="3", command= lambda: btn_click('3'))
+three.grid(row=5, column=0)
+# 4
+four = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="4", command= lambda: btn_click('4'))
+four.grid(row=5, column=1)
+# 5
+five = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="5", command= lambda: btn_click('5'))
+five.grid(row=5, column=2)
+# +
+plus = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=6,
+                        text="+", command= lambda: btn_click('+'))
+plus.grid(row=5, column=3)
+
+# 0
+zero = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="0", command= lambda: btn_click('0'))
+zero.grid(row=6, column=0)
+# 1
+one = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="1", command= lambda: btn_click('1'))
+one.grid(row=6, column=1)
+# 2
+two = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="2", command= lambda: btn_click('2'))
+two.grid(row=6, column=2)
+# +
+minus = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=6,
+                        text="-", command= lambda: btn_click('-'))
+minus.grid(row=6, column=3)
+
+# )
+open_brack = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text="(", command= lambda: btn_click('('))
+open_brack.grid(row=7, column=0)
+# (
+close_brack = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text=")", command= lambda: btn_click(')'))
+close_brack.grid(row=7, column=1)
+# .
+dot = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=3,
+                        text=".", command= lambda: btn_click('.'))
+dot.grid(row=7, column=2)
+# =
+equal = Button(bottom_frame, bg='#666666', fg='white', bd=4,
+                        height=1, width=6,
+                        text="=", command= lambda: btn_equal())
+equal.grid(row=7, column=3)
+
 # Show th App
 window.mainloop()

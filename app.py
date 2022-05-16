@@ -20,12 +20,15 @@ def clear_all():
 
 def btn_equal():
     global expression
-    if('pi' in expression):
-        expression = expression.replace('pi', '3.1415')
-    sum_up = str(eval(expression))
-    text_input.set(sum_up)
-    expression = sum_up
-
+    try:
+        if('pi' in expression):
+            expression = expression.replace('pi', '3.1415')
+        sum_up = str(eval(expression))
+        text_input.set(sum_up)
+        expression = sum_up
+    except:
+        expression = ""
+        text_input.set('Invalid equation')
 
 
 window = Tk()
